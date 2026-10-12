@@ -72,6 +72,34 @@
             <div class="form-grid">
               <div class="field"><label for="supplier-name">Nombre / empresa *</label><input id="supplier-name" required
                   maxlength="120" placeholder="Nombre del proveedor"></div>
+
+              <div class="field">
+                <label for="supplier-ruc">RUC *</label>
+                <div style="display:flex;gap:8px">
+                  <input id="supplier-ruc" name="ruc" inputmode="numeric" maxlength="11" pattern="[0-9]{11}"
+                    placeholder="20123456789" required>
+                  <button type="button" class="btn btn-secondary" id="consult-ruc-btn">
+                    Consultar RUC
+                  </button>
+                </div>
+                <small id="ruc-message" class="muted"></small>
+              </div>
+
+              <div class="field">
+                <label for="supplier-address">Dirección fiscal</label>
+                <input id="supplier-address" name="address" maxlength="200" placeholder="Dirección fiscal">
+              </div>
+
+              <div class="field">
+                <label for="supplier-status">Estado</label>
+                <input id="supplier-status" readonly placeholder="Estado del RUC">
+              </div>
+
+              <div class="field">
+                <label for="supplier-condition">Condición</label>
+                <input id="supplier-condition" readonly placeholder="Condición del contribuyente">
+              </div>
+
               <div class="field"><label for="supplier-contact">Persona de contacto *</label><input id="supplier-contact"
                   required maxlength="100" placeholder="Nombre de contacto"></div>
               <div class="field"><label for="supplier-phone">Teléfono *</label><input id="supplier-phone" required
