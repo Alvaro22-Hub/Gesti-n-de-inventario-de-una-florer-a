@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accesorios | Studio Floral</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+</head>
+
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="/paginas/index.html">
+                <div class="brand-mark">✿</div>
+                <div>
+                    <div class="brand-name">Studio Floral</div>
+                    <div class="brand-sub">Gestión floral</div>
+                </div>
+            </a>
+            <div>
+                <div class="nav-label">Espacio de trabajo</div>
+                <nav class="nav">
+                    <a data-page="index.html" href="/paginas/index.html"><span class="nav-icon">⌂</span> Resumen</a>
+                    <a data-page="catalogo.html" href="/paginas/catalogo.html"><span class="nav-icon">✿</span> Todos los
+                        productos</a>
+                    <a data-page="ramos.html" href="/paginas/ramos.html"><span class="nav-icon">💐</span> Catálogo de
+                        ramos</a>
+                    <a data-page="flores.html" href="/paginas/flores.html"><span class="nav-icon">🌹</span> Catálogo de
+                        flores</a>
+                    <a data-page="plantas.html" href="/paginas/plantas.html"><span class="nav-icon">🪴</span> Catálogo
+                        de plantas</a>
+                    <a data-page="decoracion.html" href="/paginas/decoracion.html"><span class="nav-icon">🎀</span>
+                        Decoración</a>
+                    <a data-page="accesorios.html" href="/paginas/accesorios.html"><span class="nav-icon">🏺</span>
+                        Accesorios</a>
+                    <a data-page="proveedores.html" href="/paginas/proveedores.html"><span class="nav-icon">♧</span>
+                        Proveedores</a>
+                    <a data-page="inventario.html" href="/paginas/inventario.html"><span class="nav-icon">▤</span>
+                        Inventario</a>
+                    <a data-page="nueva-venta.html" href="/paginas/nueva-venta.html"><span class="nav-icon">＋</span>
+                        Nueva venta</a>
+                    <a data-page="ticket.html" href="/paginas/ticket.html"><span class="nav-icon">◧</span> Ticket</a>
+                    <a data-page="dashboard.html" href="/paginas/dashboard.html"><span class="nav-icon">◫</span>
+                        Dashboard</a>
+                    <a data-page="reportes.html" href="/paginas/reportes.html"><span class="nav-icon">▥</span>
+                        Reportes</a>
+                </nav>
+            </div>
+            <div class="sidebar-bottom">
+                <strong>✧ Un detalle natural</strong><br>Cuida cada flor, cada pedido y cada cliente.
+            </div>
+        </aside>
+        <main class="main">
+            <header class="topbar">
+                <div class="crumb">Studio Floral <span style="color:#b9c0b8"> / </span> <span
+                        id="breadcrumb">Accesorios</span></div>
+                <div class="top-right">
+                    <span class="muted hide-mobile">Panel de administración</span>
+                    <div class="avatar">SF</div>
+                </div>
+            </header>
+            <div class="content">
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">Complementos</div>
+                        <h1>Accesorios</h1>
+                        <p>Registra los complementos y sus precios para utilizarlos al vender tus arreglos.</p>
+                    </div>
+                </div>
+
+                <section class="panel">
+                    <h2>Registrar accesorio</h2>
+                    <form id="form-accesorio">
+                        <div class="field">
+                            <label for="nombre">Nombre del accesorio *</label>
+                            <input type="text" id="nombre" placeholder="Ej. Gorrito decorativo" required>
+                        </div>
+                        <div class="field">
+                            <label for="precio">Precio por unidad (€) *</label>
+                            <input type="number" id="precio" min="0.01" step="0.01" placeholder="Ej. 3.00" required>
+                        </div>
+                        <div class="field">
+                            <label for="descripcion">Descripción</label>
+                            <textarea id="descripcion" placeholder="Describe el accesorio (opcional)"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Guardar
+                            accesorio</button>
+                    </form>
+                </section>
+
+                <section class="panel">
+                    <h2>Accesorios registrados</h2>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lista-accesorios">
+                                <tr>
+                                    <td colspan="3">Todavía no hay accesorios registrados.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <div class="footer-note">Studio Floral · Sistema de gestión · Datos guardados localmente</div>
+            </div>
+        </main>
+    </div>
+    <script>window.PAGE_NAME = "accesorios.html";</script>
+    <script src="/js/app.js"></script>
+    <script src="/js/accesorios.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de ramos | Studio Floral</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+</head>
+
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="/paginas/index.html">
+                <div class="brand-mark">✿</div>
+                <div>
+                    <div class="brand-name">Studio Floral</div>
+                    <div class="brand-sub">Gestión floral</div>
+                </div>
+            </a>
+            <div>
+                <div class="nav-label">Espacio de trabajo</div>
+                <nav class="nav">
+                    <a data-page="index.html" href="/paginas/index.html"><span class="nav-icon">⌂</span> Resumen</a>
+                    <a data-page="catalogo.html" href="/paginas/catalogo.html"><span class="nav-icon">✿</span> Todos los
+                        productos</a>
+                    <a data-page="ramos.html" href="/paginas/ramos.html"><span class="nav-icon">💐</span> Catálogo de
+                        ramos</a>
+                    <a data-page="flores.html" href="/paginas/flores.html"><span class="nav-icon">🌹</span> Catálogo de
+                        flores</a>
+                    <a data-page="plantas.html" href="/paginas/plantas.html"><span class="nav-icon">🪴</span> Catálogo
+                        de plantas</a>
+                    <a data-page="decoracion.html" href="/paginas/decoracion.html"><span class="nav-icon">🎀</span>
+                        Decoración</a>
+                    <a data-page="accesorios.html" href="/paginas/accesorios.html"><span class="nav-icon">🏺</span>
+                        Accesorios</a>
+                    <a data-page="proveedores.html" href="/paginas/proveedores.html"><span class="nav-icon">♧</span>
+                        Proveedores</a>
+                    <a data-page="inventario.html" href="/paginas/inventario.html"><span class="nav-icon">▤</span>
+                        Inventario</a>
+                    <a data-page="nueva-venta.html" href="/paginas/nueva-venta.html"><span class="nav-icon">＋</span>
+                        Nueva venta</a>
+                    <a data-page="ticket.html" href="/paginas/ticket.html"><span class="nav-icon">◧</span> Ticket</a>
+                    <a data-page="dashboard.html" href="/paginas/dashboard.html"><span class="nav-icon">◫</span>
+                        Dashboard</a>
+                    <a data-page="reportes.html" href="/paginas/reportes.html"><span class="nav-icon">▥</span>
+                        Reportes</a>
+                </nav>
+            </div>
+            <div class="sidebar-bottom">
+                <strong>✧ Un detalle natural</strong><br>Cuida cada flor, cada pedido y cada cliente.
+            </div>
+        </aside>
+        <main class="main">
+            <header class="topbar">
+                <div class="crumb">Studio Floral <span style="color:#b9c0b8"> / </span> <span id="breadcrumb">Catálogo
+                        de ramos</span></div>
+                <div class="top-right">
+                    <span class="muted hide-mobile">Panel de administración</span>
+                    <div class="avatar">SF</div>
+                </div>
+            </header>
+            <div class="content">
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">Diseño floral</div>
+                        <h1>Catálogo de ramos</h1>
+                        <p>Registra tus ramos terminados, define su precio de venta y controla su disponibilidad para
+                            las ventas.</p>
+                    </div>
+                </div>
+
+                <div id="ramo-message"></div>
+
+                <div class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <div class="panel-title">Registrar nuevo ramo</div>
+                            <div class="panel-subtitle">Los campos marcados con * son obligatorios.</div>
+                        </div>
+                    </div>
+                    <form id="form-ramo">
+                        <div class="form-grid">
+                            <div class="field">
+                                <label for="nombre-ramo">Nombre del ramo *</label>
+                                <input type="text" id="nombre-ramo" placeholder="Ej. Ramo Aurora" required>
+                            </div>
+                            <div class="field">
+                                <label for="precio-ramo">Precio de venta (€) *</label>
+                                <input type="number" id="precio-ramo" min="0.01" step="0.01" placeholder="Ej. 24.50"
+                                    required>
+                            </div>
+                            <div class="field">
+                                <label for="stock-ramo">Stock inicial (paquetes/unidades) *</label>
+                                <input type="number" id="stock-ramo" min="0" step="1" value="10" required>
+                            </div>
+                            <div class="field full">
+                                <label for="descripcion-ramo">Descripción</label>
+                                <textarea id="descripcion-ramo"
+                                    placeholder="Ramo mixto de temporada, detalles..."></textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions" style="margin-top: 16px;">
+                            <button type="submit" class="btn btn-primary">Guardar ramo</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <div class="panel-title">Ramos registrados</div>
+                            <div class="panel-subtitle" id="ramos-count">Cargando ramos...</div>
+                        </div>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Ramo</th>
+                                    <th>Descripción</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lista-ramos">
+                                <tr>
+                                    <td colspan="5" class="empty">Cargando...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="footer-note">Studio Floral · Sistema de gestión · Datos guardados localmente</div>
+            </div>
+        </main>
+    </div>
+    <script>window.PAGE_NAME = "ramos.html";</script>
+    <script src="/js/app.js"></script>
+    <script src="/js/ramos.js"></script>
+</body>
+
+</html>

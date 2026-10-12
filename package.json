@@ -1,0 +1,15 @@
+{
+  "name": "studio-floral",
+  "version": "1.0.0",
+  "description": "Sistema web de gestión para Studio Floral - Sprint 1 y estructura de sprints futuros",
+  "main": "backend/servidor.js",
+  "scripts": {
+    "start": "node backend/servidor.js",
+    "dev": "node --watch backend/servidor.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.34.7"
+  }
+}

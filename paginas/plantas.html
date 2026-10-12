@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de plantas | Studio Floral</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+</head>
+
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="/paginas/index.html">
+                <div class="brand-mark">✿</div>
+                <div>
+                    <div class="brand-name">Studio Floral</div>
+                    <div class="brand-sub">Gestión floral</div>
+                </div>
+            </a>
+            <div>
+                <div class="nav-label">Espacio de trabajo</div>
+                <nav class="nav">
+                    <a data-page="index.html" href="/paginas/index.html"><span class="nav-icon">⌂</span> Resumen</a>
+                    <a data-page="catalogo.html" href="/paginas/catalogo.html"><span class="nav-icon">✿</span> Todos los
+                        productos</a>
+                    <a data-page="ramos.html" href="/paginas/ramos.html"><span class="nav-icon">💐</span> Catálogo de
+                        ramos</a>
+                    <a data-page="flores.html" href="/paginas/flores.html"><span class="nav-icon">🌹</span> Catálogo de
+                        flores</a>
+                    <a data-page="plantas.html" href="/paginas/plantas.html"><span class="nav-icon">🪴</span> Catálogo
+                        de plantas</a>
+                    <a data-page="decoracion.html" href="/paginas/decoracion.html"><span class="nav-icon">🎀</span>
+                        Decoración</a>
+                    <a data-page="accesorios.html" href="/paginas/accesorios.html"><span class="nav-icon">🏺</span>
+                        Accesorios</a>
+                    <a data-page="proveedores.html" href="/paginas/proveedores.html"><span class="nav-icon">♧</span>
+                        Proveedores</a>
+                    <a data-page="inventario.html" href="/paginas/inventario.html"><span class="nav-icon">▤</span>
+                        Inventario</a>
+                    <a data-page="nueva-venta.html" href="/paginas/nueva-venta.html"><span class="nav-icon">＋</span>
+                        Nueva venta</a>
+                    <a data-page="ticket.html" href="/paginas/ticket.html"><span class="nav-icon">◧</span> Ticket</a>
+                    <a data-page="dashboard.html" href="/paginas/dashboard.html"><span class="nav-icon">◫</span>
+                        Dashboard</a>
+                    <a data-page="reportes.html" href="/paginas/reportes.html"><span class="nav-icon">▥</span>
+                        Reportes</a>
+                </nav>
+            </div>
+            <div class="sidebar-bottom">
+                <strong>✧ Un detalle natural</strong><br>Cuida cada flor, cada pedido y cada cliente.
+            </div>
+        </aside>
+        <main class="main">
+            <header class="topbar">
+                <div class="crumb">Studio Floral <span style="color:#b9c0b8"> / </span> <span id="breadcrumb">Catálogo
+                        de plantas</span></div>
+                <div class="top-right">
+                    <span class="muted hide-mobile">Panel de administración</span>
+                    <div class="avatar">SF</div>
+                </div>
+            </header>
+            <div class="content">
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">Vivero y hogar</div>
+                        <h1>Catálogo de plantas</h1>
+                        <p>Registra plantas ornamentales, define su precio de venta y controla las existencias.</p>
+                    </div>
+                </div>
+
+                <div id="plantas-message"></div>
+                <div class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <div class="panel-title">Registrar nueva planta</div>
+                            <div class="panel-subtitle">Los campos marcados con * son obligatorios.</div>
+                        </div>
+                    </div>
+                    <form id="form-plantas">
+                        <div class="form-grid">
+                            <div class="field">
+                                <label for="nombre-planta">Nombre de la planta *</label>
+                                <input type="text" id="nombre-planta" placeholder="Ej. Suculenta en maceta" required>
+                            </div>
+                            <div class="field">
+                                <label for="precio-planta">Precio de venta (€) *</label>
+                                <input type="number" id="precio-planta" min="0.01" step="0.01" placeholder="Ej. 15.00"
+                                    required>
+                            </div>
+                            <div class="field">
+                                <label for="stock-planta">Stock inicial (unidades) *</label>
+                                <input type="number" id="stock-planta" min="0" step="1" value="10" required>
+                            </div>
+                            <div class="field full">
+                                <label for="descripcion-planta">Descripción</label>
+                                <textarea id="descripcion-planta" placeholder="Cuidados, tipo de maceta..."></textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions" style="margin-top: 16px;">
+                            <button type="submit" class="btn btn-primary">Guardar planta</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <div class="panel-title">Plantas registradas</div>
+                            <div class="panel-subtitle" id="plantas-count">Cargando...</div>
+                        </div>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Planta</th>
+                                    <th>Descripción</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lista-plantas">
+                                <tr>
+                                    <td colspan="5" class="empty">Cargando...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="footer-note">Studio Floral · Sistema de gestión · Datos guardados localmente</div>
+            </div>
+        </main>
+    </div>
+    <script>window.PAGE_NAME = "plantas.html";</script>
+    <script src="/js/app.js"></script>
+    <script src="/js/plantas.js"></script>
+</body>
+
+</html>

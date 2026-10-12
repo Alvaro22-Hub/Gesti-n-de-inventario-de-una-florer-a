@@ -1,0 +1,284 @@
+{
+  "products": [
+    {
+      "id": "p-mv4erl1v-k7ise1",
+      "name": "listones",
+      "category": "Decoración",
+      "description": "listones decorativos para los ramos o personalizados de nuestros clientes",
+      "price": 5,
+      "stock": 8,
+      "active": true,
+      "createdAt": "2026-10-11T22:42:08.851Z"
+    },
+    {
+      "id": "p-mv4eqhhp-h6ljor",
+      "name": "bugambilia",
+      "category": "Plantas",
+      "description": "planta caracterizada por su variedad de colores",
+      "price": 10,
+      "stock": 12,
+      "active": true,
+      "createdAt": "2026-10-11T22:41:17.581Z"
+    },
+    {
+      "id": "p-mv3lkrkv-6p3yee",
+      "name": "mariposas",
+      "category": "Accesorios",
+      "description": "decoración de primavera floral",
+      "price": 5,
+      "stock": 13,
+      "active": true,
+      "createdAt": "2026-10-11T09:05:01.855Z"
+    },
+    {
+      "id": "p-mv3514be-rcz1ss",
+      "name": "ramo de bodas",
+      "category": "Ramos",
+      "description": "ramos creados esencialmente con flores blancas",
+      "price": 30.7,
+      "stock": 4,
+      "active": true,
+      "createdAt": "2026-10-11T01:21:51.386Z"
+    },
+    {
+      "id": "p-mv34wytr-sbwftm",
+      "name": "ramo romantico",
+      "category": "Ramos",
+      "description": "un ramo creado esencialmente de las rosas, símbolo del amor",
+      "price": 20,
+      "stock": 3,
+      "active": true,
+      "createdAt": "2026-10-11T01:18:37.647Z"
+    },
+    {
+      "id": "p-mv25rnss-2v1yqq",
+      "name": "Papeles coreanos",
+      "category": "Accesorios",
+      "description": "paquete de 20 hojas  para forrar arreglos",
+      "price": 5,
+      "stock": 29,
+      "active": true,
+      "createdAt": "2026-10-10T08:54:43.516Z"
+    },
+    {
+      "id": "p-demo-1",
+      "name": "Ramo Aurora",
+      "category": "Ramos",
+      "description": "Ramo mixto de temporada",
+      "price": 24.5,
+      "stock": 12,
+      "active": true,
+      "createdAt": "2026-10-10T10:00:00.000Z"
+    },
+    {
+      "id": "p-demo-2",
+      "name": "Rosas rojas",
+      "category": "Flores",
+      "description": "Paquete de 12 rosas",
+      "price": 18,
+      "stock": 8,
+      "active": true,
+      "createdAt": "2026-10-10T10:00:00.000Z"
+    },
+    {
+      "id": "p-demo-3",
+      "name": "Jarrón minimal",
+      "category": "Accesorios",
+      "description": "Jarrón cerámico",
+      "price": 14,
+      "stock": 5,
+      "active": true,
+      "createdAt": "2026-10-10T10:00:00.000Z"
+    }
+  ],
+  "suppliers": [
+    {
+      "id": "s-demo-1",
+      "name": "Flores del Valle",
+      "contact": "María López",
+      "phone": "600 123 456",
+      "email": "pedidos@floresvalle.example",
+      "notes": "Entrega semanal",
+      "active": true,
+      "createdAt": "2026-10-10T10:00:00.000Z"
+    },
+    {
+      "id": "s-demo-2",
+      "name": "Verde Vivo",
+      "contact": "Equipo comercial",
+      "phone": "600 987 654",
+      "email": "ventas@verdevivo.example",
+      "notes": "Plantas y complementos",
+      "active": true,
+      "createdAt": "2026-10-10T10:00:00.000Z"
+    }
+  ],
+  "associations": [
+    {
+      "id": "a-demo-1",
+      "productId": "p-demo-1",
+      "supplierId": "s-demo-1",
+      "createdAt": "2026-10-10T10:00:00.000Z"
+    },
+    {
+      "id": "a-demo-2",
+      "productId": "p-demo-2",
+      "supplierId": "s-demo-1",
+      "createdAt": "2026-10-10T10:00:00.000Z"
+    }
+  ],
+  "costHistory": [
+    {
+      "id": "c-demo-1",
+      "productId": "p-demo-1",
+      "cost": 11.5,
+      "date": "2026-10-10T10:00:00.000Z",
+      "note": "Costo inicial de ejemplo"
+    },
+    {
+      "id": "c-demo-2",
+      "productId": "p-demo-2",
+      "cost": 8.25,
+      "date": "2026-10-10T10:00:00.000Z",
+      "note": "Costo inicial de ejemplo"
+    }
+  ],
+  "sales": [
+    {
+      "id": "v-mv51tvmp-x7a7sn",
+      "ticketNumber": "SF-97267041",
+      "items": [
+        {
+          "type": "product",
+          "productId": "p-mv4erl1v-k7ise1",
+          "name": "listones",
+          "quantity": 3,
+          "unitPrice": 5,
+          "subtotal": 15
+        }
+      ],
+      "total": 15,
+      "date": "2026-10-12T09:27:47.041Z"
+    },
+    {
+      "id": "v-mv4gm3fu-7vvnej",
+      "ticketNumber": "SF-61631978",
+      "items": [
+        {
+          "type": "product",
+          "productId": "p-mv25rnss-2v1yqq",
+          "name": "Papeles coreanos",
+          "quantity": 1,
+          "unitPrice": 5,
+          "subtotal": 5
+        }
+      ],
+      "total": 5,
+      "date": "2026-10-11T23:33:51.978Z"
+    },
+    {
+      "id": "v-mv4g7zk5-xt5luv",
+      "ticketNumber": "SF-60973765",
+      "items": [
+        {
+          "type": "product",
+          "productId": "p-mv34wytr-sbwftm",
+          "name": "ramo romantico",
+          "quantity": 2,
+          "unitPrice": 20,
+          "subtotal": 40
+        },
+        {
+          "type": "product",
+          "productId": "p-mv4eqhhp-h6ljor",
+          "name": "bugambilia",
+          "quantity": 1,
+          "unitPrice": 10,
+          "subtotal": 10
+        },
+        {
+          "type": "product",
+          "productId": "p-mv4erl1v-k7ise1",
+          "name": "listones",
+          "quantity": 4,
+          "unitPrice": 5,
+          "subtotal": 20
+        }
+      ],
+      "total": 70,
+      "date": "2026-10-11T23:22:53.765Z"
+    },
+    {
+      "id": "v-mv4fqg1c-ytyaqn",
+      "ticketNumber": "SF-60155313",
+      "items": [
+        {
+          "type": "product",
+          "productId": "p-mv3514be-rcz1ss",
+          "name": "ramo de bodas",
+          "quantity": 2,
+          "unitPrice": 30.7,
+          "subtotal": 61.4
+        },
+        {
+          "type": "product",
+          "productId": "p-mv4erl1v-k7ise1",
+          "name": "listones",
+          "quantity": 1,
+          "unitPrice": 5,
+          "subtotal": 5
+        },
+        {
+          "type": "product",
+          "productId": "p-mv4eqhhp-h6ljor",
+          "name": "bugambilia",
+          "quantity": 3,
+          "unitPrice": 10,
+          "subtotal": 30
+        },
+        {
+          "type": "product",
+          "productId": "p-mv3lkrkv-6p3yee",
+          "name": "mariposas",
+          "quantity": 1,
+          "unitPrice": 5,
+          "subtotal": 5
+        }
+      ],
+      "total": 101.4,
+      "date": "2026-10-11T23:09:15.313Z"
+    },
+    {
+      "id": "v-mv3lx1m1-h8frd3",
+      "ticketNumber": "SF-10074729",
+      "items": [
+        {
+          "type": "product",
+          "productId": "p-mv3514be-rcz1ss",
+          "name": "ramo de bodas",
+          "quantity": 2,
+          "unitPrice": 30.7,
+          "subtotal": 61.4
+        }
+      ],
+      "total": 61.4,
+      "date": "2026-10-11T09:14:34.729Z"
+    }
+  ],
+  "lastTicket": {
+    "id": "v-mv51tvmp-x7a7sn",
+    "ticketNumber": "SF-97267041",
+    "items": [
+      {
+        "type": "product",
+        "productId": "p-mv4erl1v-k7ise1",
+        "name": "listones",
+        "quantity": 3,
+        "unitPrice": 5,
+        "subtotal": 15
+      }
+    ],
+    "total": 15,
+    "date": "2026-10-12T09:27:47.041Z"
+  }
+}

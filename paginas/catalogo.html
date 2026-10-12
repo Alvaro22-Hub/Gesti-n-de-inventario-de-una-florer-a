@@ -1,0 +1,234 @@
+```html
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#426b55">
+  <title>Productos | Studio Floral</title>
+  <link rel="stylesheet" href="/css/estilos.css">
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <aside class="sidebar">
+      <a class="brand" href="/paginas/index.html">
+        <div class="brand-mark">✿</div>
+        <div>
+          <div class="brand-name">Studio Floral</div>
+          <div class="brand-sub">Gestión floral</div>
+        </div>
+      </a>
+
+      <div>
+        <div class="nav-label">Espacio de trabajo</div>
+        <nav class="nav">
+          <a data-page="index.html" href="/paginas/index.html"><span class="nav-icon">⌂</span> Resumen</a>
+          <a data-page="catalogo.html" href="/paginas/catalogo.html"><span class="nav-icon">✿</span> Todos los
+            productos</a>
+          <a data-page="ramos.html" href="/paginas/ramos.html"><span class="nav-icon">💐</span> Catálogo de ramos</a>
+          <a data-page="flores.html" href="/paginas/flores.html"><span class="nav-icon">🌹</span> Catálogo de flores</a>
+          <a data-page="plantas.html" href="/paginas/plantas.html"><span class="nav-icon">🪴</span> Catálogo de
+            plantas</a>
+          <a data-page="decoracion.html" href="/paginas/decoracion.html"><span class="nav-icon">🎀</span> Decoración</a>
+          <a data-page="accesorios.html" href="/paginas/accesorios.html"><span class="nav-icon">🏺</span> Accesorios</a>
+          <a data-page="proveedores.html" href="/paginas/proveedores.html"><span class="nav-icon">♧</span>
+            Proveedores</a>
+          <a data-page="inventario.html" href="/paginas/inventario.html"><span class="nav-icon">▤</span> Inventario</a>
+          <a data-page="nueva-venta.html" href="/paginas/nueva-venta.html"><span class="nav-icon">＋</span> Nueva
+            venta</a>
+          <a data-page="ticket.html" href="/paginas/ticket.html"><span class="nav-icon">◧</span> Ticket</a>
+          <a data-page="dashboard.html" href="/paginas/dashboard.html"><span class="nav-icon">◫</span> Dashboard</a>
+          <a data-page="reportes.html" href="/paginas/reportes.html"><span class="nav-icon">▥</span> Reportes</a>
+        </nav>
+      </div>
+
+      <div class="sidebar-bottom">
+        <strong>✧ Un detalle natural</strong><br>
+        Cuida cada flor, cada pedido y cada cliente.
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="crumb">Studio Floral <span style="color:#b9c0b8"> / </span> <span id="breadcrumb">Resumen</span>
+        </div>
+        <div class="top-right">
+          <span class="muted hide-mobile">Panel de administración</span>
+          <div class="avatar">SF</div>
+        </div>
+      </header>
+
+      <div class="content">
+
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">Catálogo · HU-01, HU-02 y HU-03</div>
+            <h1>Productos</h1>
+            <p>Registra productos florales, actualiza sus datos y consulta el catálogo activo.</p>
+          </div>
+          <button class="btn btn-primary" id="new-product-btn">＋ Nuevo producto</button>
+        </div>
+
+        <div id="product-message"></div>
+
+        <div class="panel hidden" id="product-form-panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title" id="product-form-title">Registrar producto</div>
+              <div class="panel-subtitle">Los campos marcados son obligatorios.</div>
+            </div>
+            <button class="btn btn-secondary btn-small" id="close-product-form">Cerrar ✕</button>
+          </div>
+
+          <form id="product-form">
+            <input type="hidden" id="product-id">
+            <div class="form-grid">
+              <div class="field">
+                <label for="product-name">Nombre del producto *</label>
+                <input id="product-name" required maxlength="100" placeholder="Ej. Ramo de temporada">
+              </div>
+
+              <div class="field">
+                <label for="product-category">Categoría *</label>
+                <select id="product-category" required>
+                  <option value="">Selecciona una categoría</option>
+                  <option>Ramos</option>
+                  <option>Flores</option>
+                  <option>Plantas</option>
+                  <option>Accesorios</option>
+                  <option>Decoración</option>
+                  <option>Otros</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="product-price">Precio por paquete (€) *</label>
+                <input id="product-price" type="number" min="0.01" step="0.01" required placeholder="0,00">
+              </div>
+
+              <div class="field">
+                <label for="product-stock">Stock inicial (paquetes) *</label>
+                <input id="product-stock" type="number" min="0" step="1" required placeholder="0">
+              </div>
+
+              <div class="field full">
+                <label for="product-description">Descripción</label>
+                <textarea id="product-description" maxlength="500"
+                  placeholder="Detalles del producto, variedad, presentación…"></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" id="cancel-product">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Guardar producto</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Catálogo actual</div>
+              <div class="panel-subtitle" id="product-count">Cargando productos…</div>
+            </div>
+            <div class="toolbar">
+              <div class="search">
+                <input id="product-search" placeholder="Buscar por nombre o categoría…" aria-label="Buscar productos">
+              </div>
+              <select id="product-status" aria-label="Filtrar estado">
+                <option value="active">Solo activos</option>
+                <option value="all">Todos</option>
+                <option value="inactive">Inactivos</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Categoría</th>
+                  <th>Precio / paquete</th>
+                  <th>Stock (paquetes)</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="products-table">
+                <tr>
+                  <td colspan="6" class="empty">Cargando…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Historial de costos de compra</div>
+              <div class="panel-subtitle">Registra cada cambio de costo sin borrar los valores anteriores (HU-06).</div>
+            </div>
+          </div>
+
+          <form id="cost-form">
+            <div class="form-grid">
+              <div class="field">
+                <label for="cost-product">Producto *</label>
+                <select id="cost-product" required>
+                  <option value="">Selecciona un producto</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="cost-value">Costo de compra por paquete (€) *</label>
+                <input id="cost-value" type="number" min="0.01" step="0.01" required placeholder="0,00">
+              </div>
+
+              <div class="field full">
+                <label for="cost-note">Nota (opcional)</label>
+                <input id="cost-note" maxlength="250" placeholder="Ej. Nuevo precio del proveedor">
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">＋ Registrar costo</button>
+            </div>
+          </form>
+
+          <div class="table-wrap" style="margin-top:20px">
+            <table>
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Producto</th>
+                  <th>Costo / paquete</th>
+                  <th>Nota</th>
+                </tr>
+              </thead>
+              <tbody id="costs-table">
+                <tr>
+                  <td colspan="4" class="empty">Cargando historial…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="footer-note">Studio Floral · Sistema de gestión · Datos guardados localmente</div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>window.PAGE_NAME = "catalogo.html";</script>
+  <script src="/js/app.js"></script>
+  <script src="/js/productos.js"></script>
+</body>
+
+</html>
+```
