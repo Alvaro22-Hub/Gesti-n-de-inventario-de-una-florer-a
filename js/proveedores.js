@@ -1,6 +1,62 @@
 document.addEventListener("DOMContentLoaded", () => {
   const formPanel = document.getElementById("supplier-form-panel"), form = document.getElementById("supplier-form");
   let suppliers = [], products = [];
+
+  const rucInput = document.getElementById("supplier-ruc");
+  const consultRucBtn = document.getElementById("consult-ruc-btn");
+
+  consultRucBtn.addEventListener("click", async () => {
+    const ruc = rucInput.value.trim();
+    const message = document.getElementById("ruc-message");
+
+    if (!/^\d{11}$/.test(ruc)) {
+      message.textContent = "Ingresa un RUC válido de 11 dígitos.";
+      return;
+    }
+
+    consultRucBtn.disabled = true;
+    message.textContent = "Consultando RUC...";
+
+    try {
+      // La consulta se realiza a través del backend.
+      const data = await api(
+        `/consulta-ruc/${encodeURIComponent(ruc)}`
+      );
+
+      document.getElementById("supplier-name").value =
+        data.razonSocial || data.razon_social || "";
+
+      document.getElementById("supplier-address").value =
+        data.direccion || data.domicilio_fiscal || "";
+
+      document.getElementById("supplier-status").value =
+        data.estado || "";
+
+      document.getElementById("supplier-condition").value =
+        data.condicion || "";
+
+      // Solo completar estos campos si la fuente los proporciona.
+      if (data.telefono) {
+        document.getElementById("supplier-phone").value =
+          data.telefono;
+      }
+
+      if (data.correo || data.email) {
+        document.getElementById("supplier-email").value =
+          data.correo || data.email;
+      }
+
+      message.textContent = data.razonSocial || data.razon_social
+        ? "Datos encontrados. Revisa la información antes de guardar."
+        : "No se encontraron datos para ese RUC.";
+    } catch (error) {
+      message.textContent =
+        error.message || "No se pudo consultar el RUC.";
+    } finally {
+      consultRucBtn.disabled = false;
+    }
+  });
+
   const openForm = () => { formPanel.classList.remove("hidden"); document.getElementById("supplier-name").focus(); };
   const closeForm = () => { form.reset(); document.getElementById("supplier-id").value = ""; document.getElementById("supplier-form-title").textContent = "Registrar proveedor"; formPanel.classList.add("hidden"); };
   document.getElementById("new-supplier-btn").addEventListener("click", () => { closeForm(); openForm(); });
@@ -14,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   function renderSuppliers() {
     const q = document.getElementById("supplier-search").value.toLowerCase();
-    const list = suppliers.filter(s => [s.name,s.contact,s.phone,s.email].some(v => String(v || "").toLowerCase().includes(q)));
+    const list = suppliers.filter(s => [s.ruc, s.name, s.contact, s.phone, s.email].some(v => String(v || "").toLowerCase().includes(q)));
     const target = document.getElementById("suppliers-list");
     target.innerHTML = list.length ? list.map(s => `<div style="padding:14px 0;border-bottom:1px solid #f0f1ed"><div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><div><strong>${escapeHtml(s.name)}</strong> <span class="badge ${s.active ? "" : "inactive"}">${s.active ? "Activo" : "Inactivo"}</span><div class="muted">${escapeHtml(s.contact)}</div></div><div class="row-actions">${s.active ? `<button class="btn btn-secondary btn-small" data-supplier-edit="${s.id}">Editar</button>` : ""}<button class="btn ${s.active ? "btn-danger" : "btn-secondary"} btn-small" data-supplier-toggle="${s.id}" data-active="${!s.active}">${s.active ? "Desactivar" : "Activar"}</button></div></div><div class="muted" style="margin-top:8px">☎ ${escapeHtml(s.phone)} · ✉ ${escapeHtml(s.email)}</div>${s.notes ? `<div class="muted">${escapeHtml(s.notes)}</div>` : ""}</div>`).join("") : `<div class="empty">No hay proveedores para mostrar.</div>`;
   }
@@ -23,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (edit) {
       const s = suppliers.find(x => x.id === edit.dataset.supplierEdit); if (!s) return;
       document.getElementById("supplier-id").value = s.id;
-      ["name","contact","phone","email","notes"].forEach(key => document.getElementById(`supplier-${key}`).value = s[key] || "");
+      ["name", "contact", "phone", "email", "notes"].forEach(key => document.getElementById(`supplier-${key}`).value = s[key] || "");
       document.getElementById("supplier-form-title").textContent = "Editar proveedor"; openForm(); window.scrollTo({ top: 0, behavior: "smooth" });
     }
     if (toggle) {
@@ -37,7 +93,21 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     const id = document.getElementById("supplier-id").value;
     const payload = {};
-    ["name","contact","phone","email","notes"].forEach(key => payload[key] = document.getElementById(`supplier-${key}`).value);
+
+    [
+      "ruc",
+      "name",
+      "address",
+      "status",
+      "condition",
+      "contact",
+      "phone",
+      "email",
+      "notes"
+    ].forEach(key => {
+      const field = document.getElementById(`supplier-${key}`);
+      payload[key] = field ? field.value.trim() : "";
+    });
     try { await api(id ? `/suppliers/${id}` : "/suppliers", { method: id ? "PUT" : "POST", body: JSON.stringify(payload) }); closeForm(); showMessage("supplier-message", id ? "Proveedor actualizado." : "Proveedor registrado."); await loadAll(); }
     catch (err) { showMessage("supplier-message", err.message, "error"); }
   });
