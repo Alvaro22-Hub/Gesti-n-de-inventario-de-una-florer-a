@@ -40,13 +40,13 @@ whatsappClient.initialize();
 async function enviarAlertaStockBajo(product) {
   try {
     // Configura tu número con código de país y el sufijo '@c.us' (Ejemplo Perú: 51)
-    const tuNumero = "51981408903@c.us"; 
+    const tuNumero = "51913162053@c.us";
 
     const textoMensaje = `⚠️ *¡ALERTA DE STOCK BAJO!* ⚠️\n\n` +
-                         `🌸 *Producto:* ${product.name}\n` +
-                         `📦 *Stock actual:* ${product.stock} unidades\n` +
-                         `🏷️ *Categoría:* ${product.category}\n\n` +
-                         `_Por favor, reabastece el inventario pronto._`;
+      `🌸 *Producto:* ${product.name}\n` +
+      `📦 *Stock actual:* ${product.stock} unidades\n` +
+      `🏷️ *Categoría:* ${product.category}\n\n` +
+      `_Por favor, reabastece el inventario pronto._`;
 
     await whatsappClient.sendMessage(tuNumero, textoMensaje);
     console.log(`⚠️ Alerta de stock bajo enviada por WhatsApp para: ${product.name}`);
@@ -111,6 +111,53 @@ function nonNegativeNumber(value) { const n = Number(value); return Number.isFin
 app.get("/api/health", (_req, res) => res.json({ ok: true, app: "Studio Floral", storage: "JSON local" }));
 app.get("/api/data", (_req, res) => res.json(readData()));
 
+app.get("/api/consulta-ruc/:ruc", async (req, res) => {
+  const ruc = req.params.ruc;
+
+  if (!/^\d{11}$/.test(ruc)) {
+    return res.status(400).json({
+      error: "El RUC debe contener exactamente 11 dígitos."
+    });
+  }
+
+  try {
+    const response = await fetch(
+      `https://openruc.com/api/ruc/${encodeURIComponent(ruc)}`,
+      { signal: AbortSignal.timeout(10000) }
+    );
+
+    if (!response.ok) {
+      return res.status(502).json({
+        error: "No se pudo consultar el RUC. Inténtalo nuevamente."
+      });
+    }
+
+    const result = await response.json();
+
+    if (!result.razon_social) {
+      return res.status(404).json({
+        error: "No se encontraron datos para ese RUC."
+      });
+    }
+
+    res.json({
+      ruc: result.ruc || ruc,
+      razonSocial: result.razon_social || "",
+      direccion: result.direccion || "",
+      estado: result.estado || "",
+      condicion: result.condicion || "",
+      telefono: "",
+      correo: ""
+    });
+  } catch (error) {
+    console.error("Error consultando RUC:", error.message);
+
+    res.status(502).json({
+      error: "El servicio de consulta no está disponible."
+    });
+  }
+});
+
 app.get("/api/products", (req, res) => {
   const data = readData();
   const q = text(req.query.q).toLowerCase();
@@ -147,9 +194,9 @@ app.put("/api/products/:id", (req, res) => {
   const name = text(req.body.name), category = text(req.body.category);
   const price = positiveNumber(req.body.price), stock = nonNegativeNumber(req.body.stock);
   if (!name || !category || price === null || stock === null) return res.status(400).json({ error: "Revisa los campos obligatorios y los valores numéricos." });
-  
+
   Object.assign(p, { name, category, description: text(req.body.description), price, stock });
-  writeData(data); 
+  writeData(data);
 
   // Si al actualizar queda con stock bajo
   if (p.stock <= 5) {
@@ -169,27 +216,108 @@ app.get("/api/suppliers", (req, res) => {
   const data = readData(), q = text(req.query.q).toLowerCase();
   let items = data.suppliers || [];
   if (req.query.active === "true") items = items.filter(s => s.active);
-  if (q) items = items.filter(s => [s.name, s.contact, s.email, s.phone].some(v => String(v || "").toLowerCase().includes(q)));
+  if (q) {items = items.filter(s =>[s.ruc, s.name, s.contact, s.email, s.phone].some(v => String(v || "").toLowerCase().includes(q)));}
   res.json(items);
 });
 
+
 app.post("/api/suppliers", (req, res) => {
-  const name = text(req.body.name), contact = text(req.body.contact), phone = text(req.body.phone), email = text(req.body.email);
-  if (!name || !contact || !phone || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return res.status(400).json({ error: "Nombre, persona de contacto, teléfono y correo válido son obligatorios." });
+  const ruc = text(req.body.ruc);
+  const name = text(req.body.name);
+  const contact = text(req.body.contact);
+  const phone = text(req.body.phone);
+  const email = text(req.body.email);
+
+  if (!/^\d{11}$/.test(ruc)) {
+    return res.status(400).json({
+      error: "El RUC debe contener 11 dígitos."
+    });
   }
+
+  if (!name || !contact || !phone || !email ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({
+      error: "Completa empresa, contacto, teléfono y correo válido."
+    });
+  }
+
   const data = readData();
-  const supplier = { id: id("s"), name, contact, phone, email, notes: text(req.body.notes), active: true, createdAt: new Date().toISOString() };
-  data.suppliers.unshift(supplier); writeData(data); res.status(201).json(supplier);
+
+  if (data.suppliers.some(s => s.ruc === ruc)) {
+    return res.status(409).json({
+      error: "Ya existe un proveedor registrado con ese RUC."
+    });
+  }
+
+  const supplier = {
+    id: id("s"),
+    ruc,
+    name,
+    address: text(req.body.address),
+    status: text(req.body.status),
+    condition: text(req.body.condition),
+    contact,
+    phone,
+    email,
+    notes: text(req.body.notes),
+    active: true,
+    createdAt: new Date().toISOString()
+  };
+
+  data.suppliers.unshift(supplier);
+  writeData(data);
+
+  res.status(201).json(supplier);
 });
 
+
+
 app.put("/api/suppliers/:id", (req, res) => {
-  const data = readData(), s = data.suppliers.find(x => x.id === req.params.id);
-  if (!s) return res.status(404).json({ error: "Proveedor no encontrado." });
-  const name = text(req.body.name), contact = text(req.body.contact), phone = text(req.body.phone), email = text(req.body.email);
-  if (!name || !contact || !phone || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: "Completa los campos obligatorios y usa un correo válido." });
-  Object.assign(s, { name, contact, phone, email, notes: text(req.body.notes) }); writeData(data); res.json(s);
+  const data = readData();
+  const s = data.suppliers.find(x => x.id === req.params.id);
+
+  if (!s) {
+    return res.status(404).json({
+      error: "Proveedor no encontrado."
+    });
+  }
+
+  const ruc = text(req.body.ruc);
+  const name = text(req.body.name);
+  const contact = text(req.body.contact);
+  const phone = text(req.body.phone);
+  const email = text(req.body.email);
+
+  if (!/^\d{11}$/.test(ruc) || !name || !contact ||
+    !phone || !email ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({
+      error: "Revisa el RUC y los campos obligatorios."
+    });
+  }
+
+  if (data.suppliers.some(x => x.ruc === ruc && x.id !== s.id)) {
+    return res.status(409).json({
+      error: "Otro proveedor ya tiene ese RUC."
+    });
+  }
+
+  Object.assign(s, {
+    ruc,
+    name,
+    address: text(req.body.address),
+    status: text(req.body.status),
+    condition: text(req.body.condition),
+    contact,
+    phone,
+    email,
+    notes: text(req.body.notes)
+  });
+
+  writeData(data);
+  res.json(s);
 });
+
 
 app.patch("/api/suppliers/:id/active", (req, res) => {
   const data = readData(), s = data.suppliers.find(x => x.id === req.params.id);
